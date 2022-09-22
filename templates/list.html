@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+{% block body %}
+    <style>
+
+    </style>
+    <div class="card-body">
+
+        <div class="table-responsive">
+            <div class="text-right">
+                <a href="{% url 'add' %}" class="btn btn-success">Add</a>
+            </div>
+            <hr>
+
+            {#                        {% if request.user.is_superuser %}#}
+            <table class="table table-striped" id="table-2">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Subject</th>
+                    <th>Marks</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for x in data %}
+                    <tr>
+                        <td>{{ x.id }}</td>
+                        <td>{{ x.Name }}</td>
+                        <td>{{ x.Subject }}</td>
+                        <td>{{ x.Marks }}</td>
+                        <td>
+                            <button class="btn btn-success" data-toggle="modal" data-target="#Modal{{ x.id }}">Update
+                            </button>
+                        </td>
+                        <td><a href="{% url 'delete_student' x.id %}">
+                            <button class="btn btn-danger">Delete</button>
+                        </a></td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% for x in data %}
+        <!-- Modal -->
+        <form action="{% url 'save' %}" method="post">
+        {% csrf_token %}
+        <div class="modal fade" id="Modal{{ x.id }}" tabindex="-1" role="dialog" aria-labelledby="ModalLabel{{ x.id }}"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ModalLabel{{ x.id }}">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" class="form-control" value="{{ x.Name }}">
+                        <input type="text" class="form-control" value="{{ x.Subject }}">
+                        <input type="text" class="form-control" value="{{ x.Marks }}">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    {% endfor %}
+{% endblock %}
+
+<script type="text/javascript">
+    $(function () {
+        $(".identifyingClass").click(function () {
+            var my_id_value = $(this).data('id');
+            $(".modal-body #hiddenValue").val(my_id_value);
+        })
+    });
+</script>

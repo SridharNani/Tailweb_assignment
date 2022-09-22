@@ -1,0 +1,23 @@
+
+<html>
+    <body bgcolor="#ffc0cb">
+        <h1>Delete Conformation </h1>
+        <h3>Name : {{ data.Name }}</h3>
+        <h3>Subject : {{ data.Subject }}</h3>
+        <h3>Marks : {{ data.Marks }}</h3>
+
+
+        <h3>
+            <a href="{% url 'delete_student'  pk=data.id  %}">
+                Yes
+            </a>
+        </h3>
+
+        <h3>
+            <a href="{% url 'list' %}">
+                No
+            </a>
+        </h3>
+
+    </body>
+</html>

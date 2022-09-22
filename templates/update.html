@@ -1,0 +1,17 @@
+<html>
+    <body bgcolor="#adff2f">
+
+    <form action="{% url 'update_student' %}" method="post">
+        {% csrf_token %}
+        <h1>Update Employee</h1>
+
+        <input type="hidden" value="{{ data.Name }}" name="u3">
+        <br><br>
+        subjet = <input type="text" value="{{ data.Subject }}" name="u1">
+        <br><br>
+        Marks = <input type="number" value="{{ data.Marks }}" name="u2">
+        <br><br>
+        <button type="submit">Update</button>
+    </form>
+    </body>
+</html>
