@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="{% static 'assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css' %}">
 
   <!-- Template CSS -->
-{#  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">#}
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
   <link rel="stylesheet" href="{% static 'assets/css/components.css' %}">
 
 
@@ -48,7 +48,7 @@
     <nav class="navbar navbar-expand-lg main-navbar">
         <form class="form-inline mr-auto">
             <ul class="navbar-nav mr-3">
-                <li><a href="{% url 'add' %}" class="nav-link nav-link-lg">Tailweb</a></li>
+                <li><a href="{% url 'list' %}" class="nav-link nav-link-lg">Tailweb</a></li>
                 <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
             </ul>
         </form>
@@ -63,8 +63,6 @@
             <div class="section-header">
                 <h1>{{ user.username }}</h1>
                 <div class="section-header-breadcrumb">
-{#                    <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>#}
-{#                    <div class="breadcrumb-item"><a href="#">Modules</a></div>#}
                     <div class="breadcrumb-item">Welcome, {{ user.username }}</div>
                 </div>
             </div>
@@ -109,6 +107,7 @@
   <script src="{% static 'assets/js/custom.js' %}"></script>
   {% block scripts %}
 {% endblock %}
+
 <script>
     $('.d-sm-none').hide();
     {% for message in messages %}

@@ -32,7 +32,7 @@
                         <td>{{ x.Subject }}</td>
                         <td>{{ x.Marks }}</td>
                         <td>
-                            <button class="btn btn-success" data-toggle="modal" data-target="#Modal{{ x.id }}">Update
+                            <button class="btn btn-success" data-toggle="modal" data-target="#Modal{{ x.id }}">Edit
                             </button>
                         </td>
                         <td><a href="{% url 'delete_student' x.id %}">
@@ -47,8 +47,6 @@
     </div>
     {% for x in data %}
         <!-- Modal -->
-        <form action="{% url 'save' %}" method="post">
-        {% csrf_token %}
         <div class="modal fade" id="Modal{{ x.id }}" tabindex="-1" role="dialog" aria-labelledby="ModalLabel{{ x.id }}"
              aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -59,27 +57,34 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+
+        <form action="{% url 'update_student'  %}" method="post">
+        {% csrf_token %}
                     <div class="modal-body">
-                        <input type="text" class="form-control" value="{{ x.Name }}">
-                        <input type="text" class="form-control" value="{{ x.Subject }}">
-                        <input type="text" class="form-control" value="{{ x.Marks }}">
+                       <div class="form-group">
+                        <input type="text" class="form-control" value="{{ x.id }}" name="std_id" hidden>
+                       </div>
+                        <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" value="{{ x.Name }}" name="name">
+                        </div>
+                        <div class="form-group">
+                        <label for="name">Subject</label>
+                        <input type="text" class="form-control" value="{{ x.Subject }}" name="sub">
+                        </div>
+                            <div class="form-group">
+                        <label for="name">Marks</label>
+                        <input type="text" class="form-control" value="{{ x.Marks }}" name="marks">
+                            </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
+        </form>
                 </div>
             </div>
         </div>
-        </form>
     {% endfor %}
 {% endblock %}
 
-<script type="text/javascript">
-    $(function () {
-        $(".identifyingClass").click(function () {
-            var my_id_value = $(this).data('id');
-            $(".modal-body #hiddenValue").val(my_id_value);
-        })
-    });
-</script>

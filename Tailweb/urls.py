@@ -20,9 +20,12 @@ from app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path('', views.loginUser, name="login"),
     path('logout/', views.logoutUser, name="logout"),
     path('register/', views.registerUser, name="register"),
+
+    #add
     path('add/',views.add,name="add"),
     path('save/',views.savestudent,name="save"),
     path('list/',views.studentlist,name="list"),
@@ -30,6 +33,6 @@ urlpatterns = [
     #update
     path('modify_student/',views.modify_student,name="modify_student"),
     path('update_student/',views.update_student,name="update_student"),
-   #delete
+    #delete
     path('delete_student/<int:pk>/',views.delete_student,name="delete_student"),
 ]

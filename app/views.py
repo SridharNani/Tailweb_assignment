@@ -83,16 +83,21 @@ def modify_student(request):
     return render(request, "update.html", {"data": result})
 
 def update_student(request):
-    i = request.POST.get("u3")
-    n = request.POST.get("u1")
-    s = request.POST.get("u2")
+    if request.method == "POST":
+        std_id = request.POST.get('std_id')
+        name = request.POST.get('name')
+        sub = request.POST.get('sub')
+        marks = request.POST.get('marks')
 
-    try:
-        s = Student.objects.get(name=request.POST.get('sname'), sub=request.POST.get('sub'))
-        s.marks += request.POST.get('marks')
-        s.save()
-    except Student.DoesNotExist:
-        Student(name=request.POST.get('sname'), sub=request.POST.get('sub'), marks=request.POST.get('marks'))
-    return redirect('list')
+        std = Student.objects.filter(id=std_id).update(Name = name,Subject = sub,Marks = marks)
+        messages.success(request, "Data updated Successfully")
+        return redirect('list')
+    # i = request.POST.get("u3")
+    # n = request.POST.get("u1")
+    # s = request.POST.get("u2")
+    # sv = Student.objects.get(Name=i,Subject=n,Marks=s).save()
+    # return render(request,'update.html',{'data':sv})
+    #
+    # return redirect('list')
 
 
