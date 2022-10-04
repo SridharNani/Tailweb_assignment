@@ -15,7 +15,9 @@ def loginUser(request):
         user = authenticate(request, username=email, password=password)
         if user is not None:
             login(request, user)
+            request.session['user_id']=user.id
             return redirect('list')
+            # return render(request, "list.html",{'user_id':user.id})
         else:
             messages.error(request, "Invalid email or password!")
             return redirect('login')
@@ -29,7 +31,7 @@ def registerUser(request):
         password = request.POST.get("password")
         password_confirm = request.POST.get("password_confirm")
         if password == password_confirm:
-            UserProfile(username=username, email=email, password=make_password(password)).save()
+            UserProfile(username_id=username, email=email, password=make_password(password)).save()
             messages.success(request, "Registration Done Successfully!")
         else:
             messages.error(request, "Both password not matched!")
@@ -42,20 +44,27 @@ def logoutUser(request):
 
 
 def add(request):
-    return render(request,'create.html')
+    userdata=UserProfile.objects.all()
+    print(userdata.values())
+
+    return render(request,'create.html',{'userdata':userdata})
 
 
 def savestudent(request):
     if request.method == 'POST':
+        username=request.POST.get('id')
+        print(username,'iiiiid')
+
         name = request.POST.get('name')
         subject = request.POST.get('subject')
         marks = request.POST.get('marks')
+
         try:
-            s = Student.objects.get(Name=name, Subject=subject)
+            s = Student.objects.get(Name=name, Subject=subject,username_id=username)
             s.Marks += int(marks)
             s.save()
         except Student.DoesNotExist:
-            Student(Name=name, Subject=subject, Marks=marks).save()
+            Student(Name=name, Subject=subject, Marks=marks,username_id=username).save()
 
         messages.success(request, "Student Details are saved")
         return  redirect('list')
@@ -68,7 +77,9 @@ def savestudent(request):
 
 
 def studentlist(request):
-    studentlist= Student.objects.all()
+    userid=request.session['user_id']
+
+    studentlist= Student.objects.filter(username_id=userid).all()
     return render(request, 'list.html', {"data":studentlist})
 
 def delete_student(request,pk):
